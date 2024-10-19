@@ -18,7 +18,10 @@ export default function FeaturedArticle({ article }) {
 
         <p className='text-sm text-primary-foreground/90 mb-2'>{formatDate(article.date)}</p>
 
-        <Link href={`/article/${article.slug}`} className='text-blue-400 hover:underline transition-colors duration-300 ease-in-out hover:text-blue-400/90'>
+        <Link
+          href={`/articles/${article.slug}?id=${article.id}`}
+          className='text-blue-400 hover:underline transition-colors duration-300 ease-in-out hover:text-blue-400/90'
+        >
           Read more →
         </Link>
       </div>

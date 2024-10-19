@@ -16,7 +16,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
     setLoading(true);
     try {
       const nextPage = page + 1;
-      const url = `/api/articles?${category !== 'all' ? `category=${category}&` : ''}page=${nextPage}`;
+      const url = `/api/articles?${category !== 'all' ? `category=${category}&` : ''}page=${nextPage}&limit=10`;
       const res = await fetch(url);
       const data = await res.json();
       if (data.articles.length > 0) {
@@ -41,6 +41,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
     };
 
     window.addEventListener('scroll', handleScroll);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loadMoreArticles]);
 
@@ -69,7 +70,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
                   className='transition-transform duration-300 ease-in-out transform hover:scale-110'
                 />
               </div>
-              <Link href={`/article/${article.id}`}>
+              <Link href={`/articles/${article.slug}?id=${article.id}`}>
                 <div className='p-4'>
                   <h4 className='scroll-m-20 pb-2 text-xl font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary'>
                     {removeQuotes(article.title)}
@@ -89,6 +90,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
           );
         })}
       </div>
+
       {loading && <p className='text-center mt-4'>Loading more articles...</p>}
     </div>
   );

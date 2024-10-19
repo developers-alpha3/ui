@@ -11,8 +11,9 @@ async function getArticle(id) {
   return res.json();
 }
 
-export default async function ArticlePage({ params }) {
-  const article = await getArticle(params.id);
+export default async function ArticlePage({ params, searchParams }) {
+  const id = searchParams.id || params.id;
+  const article = await getArticle(id);
 
   return (
     <>

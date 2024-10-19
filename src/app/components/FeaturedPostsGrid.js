@@ -16,7 +16,7 @@ function FeaturedPost({ article }) {
 
       <div className='p-4'>
         <h4 className='scroll-m-20 text-xl font-semibold tracking-tight mb-2 transition-colors duration-300 ease-in-out hover:text-primary'>{article.title}</h4>
-        <Link href={`/article/${article.slug}`} className='text-blue-600 transition-colors duration-300 ease-in-out hover:text-blue-600/90'>
+        <Link href={`/articles/${article.slug}?id=${article.id}`} className='text-blue-600 transition-colors duration-300 ease-in-out hover:text-blue-600/90'>
           Read more →
         </Link>
       </div>

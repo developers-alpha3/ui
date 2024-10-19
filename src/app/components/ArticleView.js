@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Globe } from 'lucide-react';
 import Breadcrumb from './Breadcrumb';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { categoryIcons, formatDate, removeQuotes } from '@/src/lib/utils';
 
 export default function ArticleView({ article }) {
@@ -42,20 +44,7 @@ export default function ArticleView({ article }) {
               </div>
             </div>
             <div className='prose max-w-none text-zinc-700 leading-relaxed space-y-6'>
-              {article.content ? (
-                article.content.split('\n\n').map((paragraph, index) => (
-                  <p
-                    key={index}
-                    className={`mb-4 transition-all duration-500 ease-out delay-${index * 100} ${
-                      isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                    }`}
-                  >
-                    {paragraph}
-                  </p>
-                ))
-              ) : (
-                <p>No content available for this article.</p>
-              )}
+              {article.content ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{article.content}</ReactMarkdown> : <p>No content available for this article.</p>}
             </div>
           </div>
         </article>
