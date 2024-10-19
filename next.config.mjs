@@ -1,8 +1,7 @@
-import { default as NextSEO } from './next-seo.config.js';
+import NextSEO from './next-seo.config.js';
 
 const nextConfig = {
   // ... (keep existing configurations)
-  //   seo: NextSEO,
   images: {
     unoptimized: true,
   },
@@ -14,10 +13,7 @@ const nextConfig = {
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
           { key: 'Access-Control-Allow-Origin', value: '*' },
           { key: 'Access-Control-Allow-Methods', value: '*' },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: '*',
-          },
+          { key: 'Access-Control-Allow-Headers', value: '*' },
         ],
       },
     ];

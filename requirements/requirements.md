@@ -26,7 +26,7 @@ This project is a news page which displays news articles in a presentable format
 # Relevant docs
 
 - The news articles should be rendered from an API.
-- GET localhost:4178/api/v1/articles will return the top news articles in all categories. - The response for the api will be like this:
+- GET localhost:4178/v1/articles will return the top news articles in all categories. - The response for the api will be like this:
   ```json
   {
     "articles": [
@@ -92,7 +92,7 @@ This project is a news page which displays news articles in a presentable format
     "totalArticles": 80
   }
   ```
-- GET localhost:4178/api/v1/articles?category=[category] will return the top news articles in a specific category. - The response for the api will be like this:
+- GET localhost:4178/v1/articles?category=[category] will return the top news articles in a specific category. - The response for the api will be like this:
 
   ```json
   {
@@ -146,7 +146,7 @@ This project is a news page which displays news articles in a presentable format
   }
   ```
 
-- GET localhost:4178/api/v1/articles/[articleid] will return the news article with the given articleid along with the recommended articles.
+- GET localhost:4178/v1/articles/[articleid] will return the news article with the given articleid along with the recommended articles.
   - The response for the api will be like this:
   ```json
   {

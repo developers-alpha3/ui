@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function GET(request, { params }) {
   const id = params.id;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/articles/${id}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles/${id}`);
     if (!response.ok) {
       throw new Error('Failed to fetch article');
     }

@@ -12,10 +12,16 @@ export const removeQuotes = (title) => {
 
 export const formatDate = (dateString) => {
   if (!dateString) return 'No date available';
+
   const date = new Date(dateString);
-  if (isNaN(date.getTime())) return 'Invalid date';
-  const options = { day: '2-digit', month: 'short', year: 'numeric' };
-  return date.toLocaleDateString('en-GB', options);
+
+  return isNaN(date.getTime())
+    ? 'Invalid date'
+    : date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      });
 };
 
 export const categoryIcons = {

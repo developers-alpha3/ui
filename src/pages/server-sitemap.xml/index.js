@@ -2,7 +2,7 @@ import { getServerSideSitemap } from 'next-sitemap';
 
 export const getServerSideProps = async (ctx) => {
   // Fetch all articles from your API
-  const response = await fetch('http://localhost:4178/api/v1/articles?limit=1000');
+  const response = await fetch('http://localhost:4178/v1/articles?limit=1000');
   const data = await response.json();
 
   const fields = data.articles.map((article) => ({

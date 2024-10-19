@@ -2,7 +2,7 @@ import ArticleView from '../../components/ArticleView';
 import Header from '../../components/Header';
 
 async function getArticle(id) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/articles/${id}`, { cache: 'no-store' });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles/${id}`, { cache: 'no-store' });
 
   if (!res.ok) {
     throw new Error('Failed to fetch article');

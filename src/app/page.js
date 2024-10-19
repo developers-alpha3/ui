@@ -4,40 +4,30 @@ import RecommendedArticles from './components/RecommendedArticles';
 import FeaturedArticle from './components/FeaturedArticle';
 import FeaturedPostsGrid from './components/FeaturedPostsGrid';
 
-async function getArticles(category = 'All', page = 1, limit = 10) {
-  const url = `${process.env.NEXT_PUBLIC_URL}/api/articles?${category !== 'All' ? `category=${category}&` : ''}page=${page}&limit=${limit}`;
-  const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to fetch articles');
+async function fetchArticles(category = 'All', page = 1, limit = 10) {
+  const url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
+
+  if (category && category !== 'All') {
+    url.searchParams.append('category', category);
   }
-  return res.json();
+
+  try {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch articles: ${response.status} ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    return { error: error.message };
+  }
 }
 
 export default async function Home({ searchParams }) {
-  const category = searchParams?.category || 'All';
   const page = Number(searchParams?.page) || 1;
-  const { articles, currentPage, totalPages } = await getArticles(category, page, 10);
+  const category = searchParams?.category || 'All';
 
-  // Use the first article as the featured post
-  const featuredPost = articles[0]
-    ? {
-        slug: articles[0].id,
-        title: articles[0].title,
-        image: articles[0].imagename ? `/images/${articles[0].imagename}` : '/images/placeholder.png',
-        date: new Date(articles[0].isodate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      }
-    : null;
-
-  // Use the next two articles for the featured posts grid
-  const featuredPosts = articles.slice(1, 3).map((article) => ({
-    slug: article.id,
-    title: article.title,
-    image: article.imagename ? `/images/${article.imagename}` : '/images/placeholder.png',
-    date: new Date(articles[0].isodate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-  }));
-
-  // Use the remaining articles for the news grid
-  const remainingArticles = articles.slice(3);
+  const { articles, currentPage, totalPages } = await fetchArticles(category, page, 10);
 
   return (
     <main className='min-h-screen bg-background'>
@@ -46,24 +36,26 @@ export default async function Home({ searchParams }) {
       <CategoryBar />
 
       <div className='max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 py-8'>
-        {featuredPost && (
+        {articles && articles.length > 0 && (
           <section className='mb-12'>
             <h2 className='text-2xl font-bold mb-6'>Newest Article</h2>
-            <FeaturedArticle post={featuredPost} />
+            <FeaturedArticle article={articles[0]} />
           </section>
         )}
 
-        {featuredPosts.length > 0 && (
+        {articles && articles.length > 3 && (
           <section className='mb-12'>
             <h2 className='text-2xl font-bold mb-6'>Featured Articles</h2>
-            <FeaturedPostsGrid posts={featuredPosts} />
+            <FeaturedPostsGrid articles={articles.slice(1, 3)} />
           </section>
         )}
 
-        <section>
-          <h2 className='text-2xl font-bold mb-6'>More Great Articles</h2>
-          <RecommendedArticles initialArticles={remainingArticles} initialPage={currentPage} totalPages={totalPages} category={category} />
-        </section>
+        {articles && articles.length > 4 && (
+          <section>
+            <h2 className='text-2xl font-bold mb-6'>More Great Articles</h2>
+            <RecommendedArticles initialArticles={articles.slice(3)} initialPage={currentPage} totalPages={totalPages} category={category} />
+          </section>
+        )}
       </div>
     </main>
   );
