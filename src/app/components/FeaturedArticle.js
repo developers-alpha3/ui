@@ -16,7 +16,7 @@ export default function FeaturedArticle({ article }) {
       <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6'>
         <h2 className='text-2xl font-bold text-primary-foreground mb-2 font-serif'>{article.title}</h2>
 
-        <p className='text-sm text-primary-foreground/90 mb-2'>{formatDate(article.date)}</p>
+        <p className='text-sm text-primary-foreground/90 mb-2'>{formatDate(article.isodate)}</p>
 
         <Link
           href={`/articles/${article.slug}?id=${article.id}`}
