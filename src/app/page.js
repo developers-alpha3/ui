@@ -5,10 +5,10 @@ import FeaturedArticle from './components/FeaturedArticle';
 import FeaturedPostsGrid from './components/FeaturedPostsGrid';
 
 async function fetchArticles(category = 'All', page = 1, limit = 10) {
-  const url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
+  let url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
 
   if (category && category !== 'All') {
-    url.searchParams.append('category', category);
+    url = `${url}&category=${category}`;
   }
 
   try {

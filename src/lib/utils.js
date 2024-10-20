@@ -6,10 +6,6 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-export const removeQuotes = (title) => {
-  return title ? title.replace(/^"|"$/g, '') : '';
-};
-
 export const formatDate = (dateString) => {
   if (!dateString) return 'No date available';
 

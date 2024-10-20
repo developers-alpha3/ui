@@ -3,7 +3,26 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Globe } from 'lucide-react';
-import { categoryIcons, formatDate, removeQuotes } from '@/src/lib/utils';
+import { categoryIcons, formatDate } from '@/src/lib/utils';
+
+async function fetchArticles(category = 'All', page = 1, limit = 10) {
+  const url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
+
+  if (category && category !== 'All') {
+    url.searchParams.append('category', category);
+  }
+
+  try {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch articles: ${response.status} ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    return { error: error.message };
+  }
+}
 
 const RecommendedArticles = ({ initialArticles, initialPage, totalPages, category }) => {
   const [articles, setArticles] = useState(initialArticles);
@@ -13,16 +32,18 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
 
   const loadMoreArticles = useCallback(async () => {
     if (loading || !hasMore) return;
+
     setLoading(true);
+
     try {
       const nextPage = page + 1;
-      const url = `/api/articles?${category !== 'all' ? `category=${category}&` : ''}page=${nextPage}&limit=10`;
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.articles.length > 0) {
-        setArticles((prev) => [...(prev || []), ...data.articles]);
+
+      const { articles, totalPages } = await fetchArticles(category, nextPage, 10);
+
+      if (articles.length > 0) {
+        setArticles((prev) => [...(prev || []), ...articles]);
         setPage(nextPage);
-        setHasMore(nextPage < data.totalpages);
+        setHasMore(nextPage < totalPages);
       } else {
         setHasMore(false);
       }
@@ -73,7 +94,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
               <Link href={`/articles/${article.slug}?id=${article.id}`}>
                 <div className='p-4'>
                   <h4 className='scroll-m-20 pb-2 text-xl font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary'>
-                    {removeQuotes(article.title)}
+                    {article.title}
                   </h4>
 
                   <div className='flex items-center justify-between text-sm text-secondary-foreground'>

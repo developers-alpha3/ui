@@ -6,7 +6,7 @@ import { Globe } from 'lucide-react';
 import Breadcrumb from './Breadcrumb';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { categoryIcons, formatDate, removeQuotes } from '@/src/lib/utils';
+import { categoryIcons, cn, formatDate } from '@/src/lib/utils';
 
 export default function ArticleView({ article }) {
   const Icon = categoryIcons[article.category] || Globe;
@@ -18,10 +18,11 @@ export default function ArticleView({ article }) {
 
   return (
     <div className='py-8'>
-      <div className={`transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div className={cn('transition-all duration-500 ease-out opacity-0 translate-y-4', isLoaded && 'opacity-100 translate-y-0')}>
         <div className='w-full sm:w-[115%] relative sm:left-1/2 sm:-translate-x-1/2 mb-4'>
           <Breadcrumb category={article.category} />
         </div>
+
         <article className='mt-8'>
           <div className='relative w-full sm:w-[115%] sm:left-1/2 sm:-translate-x-1/2 aspect-[21/7] mb-16 overflow-hidden rounded-3xl shadow-[rgba(0,_0,_0,_0.2)_0px_40px_40px_-7px]'>
             <Image
@@ -32,9 +33,10 @@ export default function ArticleView({ article }) {
               unoptimized
             />
           </div>
+
           <div className='bg-background px-4 sm:px-0'>
-            <div className='mb-6'>
-              <h1 className='text-3xl font-bold text-zinc-800 mb-2 font-serif'>{removeQuotes(article.title)}</h1>
+            <div className='mb-12'>
+              <h1 className='text-3xl font-bold text-zinc-800 mb-2 font-serif'>{article.title}</h1>
               <div className='flex justify-between items-center'>
                 <p className='text-sm text-muted-foreground'>{formatDate(article.isodate)}</p>
                 <div className='flex items-center'>
@@ -43,11 +45,13 @@ export default function ArticleView({ article }) {
                 </div>
               </div>
             </div>
-            <div className='prose max-w-none text-zinc-700 leading-relaxed space-y-6'>
+
+            <div className='prose max-w-none space-y-6'>
               {article.content ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{article.content}</ReactMarkdown> : <p>No content available for this article.</p>}
             </div>
           </div>
         </article>
+
         {article.recommendedArticles && Object.keys(article.recommendedArticles).length > 0 ? (
           <section className='mt-12'>
             <h2 className='text-2xl font-bold mb-4'>Recommended Articles</h2>
@@ -72,7 +76,7 @@ export default function ArticleView({ article }) {
                       <Link href={`/article/${article.id}`}>
                         <div className='p-4'>
                           <h4 className='scroll-m-20 text-xl mb-2 font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary'>
-                            {removeQuotes(article.title)}
+                            {article.title}
                           </h4>
 
                           <div className='flex items-center justify-between text-sm text-secondary-foreground'>
