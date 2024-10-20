@@ -4,7 +4,6 @@ import { Button } from '@/src/components/ui/button';
 import {
   Globe,
   Briefcase,
-  Film,
   Tv,
   Shirt,
   Users,
@@ -44,19 +43,27 @@ const categories = [
 const CategoryBar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentCategory = searchParams.get('category') || 'All';
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState(searchParams.get('category') || 'All');
+
+  useEffect(() => {
+    const category = searchParams.get('category') || 'All';
+    setCurrentCategory(category);
+
+    if (!searchParams.get('category')) {
+      const params = new URLSearchParams(searchParams);
+      params.set('category', 'All');
+      const newPath = `?${params.toString()}`;
+      router.push(newPath, { shallow: true });
+    }
+  }, [searchParams, router]);
 
   const handleCategoryChange = (category) => {
     const params = new URLSearchParams(searchParams);
-    if (category === 'All') {
-      params.delete('category');
-    } else {
-      params.set('category', category);
-    }
-    const newPath = params.toString() ? `/?${params.toString()}` : '/';
+    params.set('category', category);
+    const newPath = `?${params.toString()}`;
     router.push(newPath);
   };
 

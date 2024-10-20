@@ -10,16 +10,18 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
   const [page, setPage] = useState(initialPage);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(page < totalPages);
+  const [loadingMore, setLoadingMore] = useState(false);
   const loader = useRef(null);
 
   const loadMoreArticles = useCallback(async () => {
-    if (loading || !hasMore) return;
+    if (loading || loadingMore || !hasMore) return;
 
-    setLoading(true);
+    setLoadingMore(true);
 
     try {
       const nextPage = page + 1;
-      const response = await fetch(`/api/articles?category=${category}&page=${nextPage}&limit=10`);
+      const categoryParam = category && category !== 'All' ? `category=${encodeURIComponent(category)}&` : '';
+      const response = await fetch(`/api/articles?${categoryParam}page=${nextPage}&limit=10`);
       const { articles: newArticles, totalPages: newTotalPages } = await response.json();
 
       if (newArticles && newArticles.length > 0) {
@@ -32,9 +34,9 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
     } catch (error) {
       console.error('Error loading more articles:', error);
     } finally {
-      setLoading(false);
+      setLoadingMore(false);
     }
-  }, [category, loading, page, hasMore]);
+  }, [category, loading, loadingMore, page, hasMore]);
 
   useEffect(() => {
     const handleObserver = (entries) => {
@@ -47,7 +49,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
     const options = {
       root: null,
       threshold: 1.0,
-      rootMargin: '300px',
+      rootMargin: '100px',
     };
 
     const observer = new IntersectionObserver(handleObserver, options);
@@ -109,8 +111,11 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
         })}
       </div>
 
-      {hasMore && <div ref={loader} className='h-10 mt-4' />}
-      {loading && <p className='text-center mt-4'>Loading more articles...</p>}
+      {(hasMore || loadingMore) && (
+        <div ref={loader} className='h-20 mt-4 flex items-center justify-center'>
+          {loadingMore && <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary'></div>}
+        </div>
+      )}
     </div>
   );
 };
