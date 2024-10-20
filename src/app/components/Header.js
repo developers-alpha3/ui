@@ -1,5 +1,9 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
+import LoadingLine from './LoadingLine';
 
 const Header = () => {
   return (

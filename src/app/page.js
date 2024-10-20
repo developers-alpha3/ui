@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Header from './components/Header';
 import CategoryBar from './components/CategoryBar';
 import RecommendedArticles from './components/RecommendedArticles';
@@ -30,31 +31,33 @@ export default async function Home({ searchParams }) {
   const { articles, currentPage, totalPages } = await fetchArticles(category, page, 10);
 
   return (
-    <main className='min-h-screen bg-background'>
-      <Header />
+    <main className='min-h-screen'>
       <CategoryBar />
-      <div className='max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 py-8'>
-        {articles && articles.length > 0 && (
-          <section className='mb-12'>
-            <h2 className='text-2xl font-bold mb-6'>Newest Article</h2>
-            <FeaturedArticle article={articles[0]} />
-          </section>
-        )}
 
-        {articles && articles.length > 3 && (
-          <section className='mb-12'>
-            <h2 className='text-2xl font-bold mb-6'>Featured Articles</h2>
-            <FeaturedPostsGrid articles={articles.slice(1, 3)} />
-          </section>
-        )}
+      <Suspense fallback={null}>
+        <div className='max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 py-8'>
+          {articles && articles.length > 0 && (
+            <section className='mb-12'>
+              <h2 className='text-2xl font-bold mb-6'>Newest Article</h2>
+              <FeaturedArticle article={articles[0]} />
+            </section>
+          )}
 
-        {articles && articles.length > 4 && (
-          <section>
-            <h2 className='text-2xl font-bold mb-6'>More Great Articles</h2>
-            <RecommendedArticles initialArticles={articles.slice(3)} initialPage={currentPage} totalPages={totalPages} category={category} />
-          </section>
-        )}
-      </div>
+          {articles && articles.length > 3 && (
+            <section className='mb-12'>
+              <h2 className='text-2xl font-bold mb-6'>Featured Articles</h2>
+              <FeaturedPostsGrid articles={articles.slice(1, 3)} />
+            </section>
+          )}
+
+          {articles && articles.length > 4 && (
+            <section>
+              <h2 className='text-2xl font-bold mb-6'>More Great Articles</h2>
+              <RecommendedArticles initialArticles={articles.slice(3)} initialPage={currentPage} totalPages={totalPages} category={category} />
+            </section>
+          )}
+        </div>
+      </Suspense>
     </main>
   );
 }
