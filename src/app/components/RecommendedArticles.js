@@ -84,16 +84,16 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
             >
               <div className='relative h-44 overflow-hidden'>
                 <Image
-                  src={article.imagename ? `/images/${article.imagename}` : '/images/placeholder.png'}
+                  width={100}
+                  height={100}
                   alt={article.title}
-                  layout='fill'
-                  objectFit='cover'
-                  className='transition-transform duration-300 ease-in-out transform hover:scale-110'
+                  src={`/images/${article.imagename}`}
+                  className='transition-transform duration-300 ease-in-out w-auto h-auto transform hover:scale-110'
                 />
               </div>
               <Link href={`/articles/${article.slug}?id=${article.id}`}>
                 <div className='p-4'>
-                  <h4 className='scroll-m-20 pb-2 text-xl font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary'>
+                  <h4 className='scroll-m-20 pb-2 text-lg font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary'>
                     {article.title}
                   </h4>
 

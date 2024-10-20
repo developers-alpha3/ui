@@ -8,9 +8,9 @@ function FeaturedPost({ article }) {
         <Image
           alt={article.title}
           src={`/images/${article.imagename}`}
-          layout='fill'
-          objectFit='cover'
-          className='transition-transform duration-300 ease-in-out transform hover:scale-110'
+          width={100}
+          height={100}
+          className='transition-transform duration-300 ease-in-out w-auto h-auto transform hover:scale-110'
         />
       </div>
 

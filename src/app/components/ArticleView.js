@@ -66,14 +66,14 @@ export default function ArticleView({ article }) {
                     >
                       <div className='relative h-44 overflow-hidden'>
                         <Image
-                          src={article.imagename ? `/images/${article.imagename}` : '/images/placeholder.png'}
-                          alt={article.title}
                           layout='fill'
                           objectFit='cover'
+                          alt={article.title}
+                          src={`/images/${article.imagename}`}
                           className='transition-transform duration-300 ease-in-out transform hover:scale-110'
                         />
                       </div>
-                      <Link href={`/article/${article.id}`}>
+                      <Link href={`/articles/${article.slug}?id=${article.id}`}>
                         <div className='p-4'>
                           <h4 className='scroll-m-20 text-xl mb-2 font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary'>
                             {article.title}
