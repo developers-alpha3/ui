@@ -1,34 +1,16 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Globe } from 'lucide-react';
 import { categoryIcons, formatDate } from '@/src/lib/utils';
-
-async function fetchArticles(category = 'All', page = 1, limit = 10) {
-  const url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
-
-  if (category && category !== 'All') {
-    url.searchParams.append('category', category);
-  }
-
-  try {
-    const response = await fetch(url, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`Failed to fetch articles: ${response.status} ${response.statusText}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    return { error: error.message };
-  }
-}
 
 const RecommendedArticles = ({ initialArticles, initialPage, totalPages, category }) => {
   const [articles, setArticles] = useState(initialArticles);
   const [page, setPage] = useState(initialPage);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(page < totalPages);
+  const loader = useRef(null);
 
   const loadMoreArticles = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -37,13 +19,13 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
 
     try {
       const nextPage = page + 1;
+      const response = await fetch(`/api/articles?category=${category}&page=${nextPage}&limit=10`);
+      const { articles: newArticles, totalPages: newTotalPages } = await response.json();
 
-      const { articles, totalPages } = await fetchArticles(category, nextPage, 10);
-
-      if (articles.length > 0) {
-        setArticles((prev) => [...(prev || []), ...articles]);
+      if (newArticles && newArticles.length > 0) {
+        setArticles((prev) => [...prev, ...newArticles]);
         setPage(nextPage);
-        setHasMore(nextPage < totalPages);
+        setHasMore(nextPage < newTotalPages);
       } else {
         setHasMore(false);
       }
@@ -55,15 +37,30 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
   }, [category, loading, page, hasMore]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100) {
+    const handleObserver = (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
         loadMoreArticles();
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const options = {
+      root: null,
+      threshold: 1.0,
+      rootMargin: '300px',
+    };
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    const observer = new IntersectionObserver(handleObserver, options);
+    const currentLoader = loader.current;
+    if (currentLoader) {
+      observer.observe(currentLoader);
+    }
+
+    return () => {
+      if (currentLoader) {
+        observer.unobserve(currentLoader);
+      }
+    };
   }, [loadMoreArticles]);
 
   useEffect(() => {
@@ -112,6 +109,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
         })}
       </div>
 
+      {hasMore && <div ref={loader} className='h-10 mt-4' />}
       {loading && <p className='text-center mt-4'>Loading more articles...</p>}
     </div>
   );

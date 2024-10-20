@@ -8,7 +8,7 @@ async function fetchArticles(category = 'All', page = 1, limit = 10) {
   let url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
 
   if (category && category !== 'All') {
-    url = `${url}&category=${category}`;
+    url += `&category=${category}`;
   }
 
   try {
@@ -32,9 +32,7 @@ export default async function Home({ searchParams }) {
   return (
     <main className='min-h-screen bg-background'>
       <Header />
-
       <CategoryBar />
-
       <div className='max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-0 py-8'>
         {articles && articles.length > 0 && (
           <section className='mb-12'>
