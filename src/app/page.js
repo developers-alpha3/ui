@@ -1,15 +1,17 @@
 import { Suspense } from 'react';
-import Header from './components/Header';
 import CategoryBar from './components/CategoryBar';
 import RecommendedArticles from './components/RecommendedArticles';
 import FeaturedArticle from './components/FeaturedArticle';
 import FeaturedPostsGrid from './components/FeaturedPostsGrid';
 
-async function fetchArticles(category = 'All', page = 1, limit = 10) {
-  let url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
+async function fetchArticles(category, page, limit) {
+  const url = new URL(`${process.env.CONTENT_WRITER_HOST}/v1/articles`);
 
-  if (category && category !== 'All') {
-    url += `&category=${category}`;
+  url.searchParams.append('page', page);
+  url.searchParams.append('limit', limit);
+
+  if (category !== 'all') {
+    url.searchParams.append('category', category);
   }
 
   try {
@@ -25,10 +27,11 @@ async function fetchArticles(category = 'All', page = 1, limit = 10) {
 }
 
 export default async function Home({ searchParams }) {
-  const page = Number(searchParams?.page) || 1;
-  const category = searchParams?.category || 'All';
+  const page = 1;
+  const limit = 20;
+  const category = searchParams.category;
 
-  const { articles, currentPage, totalPages } = await fetchArticles(category, page, 10);
+  const { articles, currentPage, totalPages } = await fetchArticles(category, page, limit);
 
   return (
     <main className='min-h-screen'>
@@ -43,14 +46,14 @@ export default async function Home({ searchParams }) {
             </section>
           )}
 
-          {articles && articles.length > 3 && (
+          {articles && articles.length >= 3 && (
             <section className='mb-12'>
               <h2 className='text-2xl font-bold mb-6'>Featured Articles</h2>
               <FeaturedPostsGrid articles={articles.slice(1, 3)} />
             </section>
           )}
 
-          {articles && articles.length > 4 && (
+          {articles && articles.length >= 4 && (
             <section>
               <h2 className='text-2xl font-bold mb-6'>More Great Articles</h2>
               <RecommendedArticles initialArticles={articles.slice(3)} initialPage={currentPage} totalPages={totalPages} category={category} />

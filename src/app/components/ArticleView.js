@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm';
 import { categoryIcons, cn, formatDate } from '@/src/lib/utils';
 
 export default function ArticleView({ article }) {
-  const Icon = categoryIcons[article.category] || Globe;
+  const Icon = categoryIcons[article.category.toLowerCase()] || Globe;
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

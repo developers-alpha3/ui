@@ -2,14 +2,18 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get('category') || 'All';
-  const page = Number(searchParams.get('page')) || 1;
-  const limit = Number(searchParams.get('limit')) || 10;
 
-  let url = `${process.env.NEXT_PUBLIC_CONTENT_WRITER_HOST}/v1/articles?page=${page}&limit=${limit}`;
+  const category = searchParams.get('category');
+  const page = Number(searchParams.get('page'));
+  const limit = Number(searchParams.get('limit'));
 
-  if (category && category !== 'All') {
-    url += `&category=${category}`;
+  const url = new URL(`${process.env.CONTENT_WRITER_HOST}/v1/articles`);
+
+  url.searchParams.append('page', page);
+  url.searchParams.append('limit', limit);
+
+  if (category !== 'all') {
+    url.searchParams.append('category', category);
   }
 
   try {

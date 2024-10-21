@@ -22,22 +22,22 @@ import {
 import { useRef, useEffect, useState } from 'react';
 
 const categories = [
-  { name: 'All', icon: Globe },
-  { name: 'Politics', icon: Users },
-  { name: 'Business', icon: Briefcase },
-  { name: 'Beauty', icon: Heart },
-  { name: 'Sports', icon: Coffee },
-  { name: 'Entertainment', icon: Tv },
-  { name: 'Technology', icon: Laptop },
-  { name: 'Health', icon: Heart },
-  { name: 'Education', icon: GraduationCap },
-  { name: 'Influencers', icon: Users },
-  { name: 'Startups', icon: Rocket },
-  { name: 'Travel', icon: Plane },
-  { name: 'Food', icon: Utensils },
-  { name: 'Fashion', icon: Shirt },
-  { name: 'Lifestyle', icon: Sparkles },
-  { name: 'Movies', icon: Clapperboard },
+  { name: 'All', icon: Globe, code: 'all' },
+  { name: 'Politics', icon: Users, code: 'politics' },
+  { name: 'Business', icon: Briefcase, code: 'business' },
+  { name: 'Beauty', icon: Heart, code: 'beauty' },
+  { name: 'Sports', icon: Coffee, code: 'sports' },
+  { name: 'Entertainment', icon: Tv, code: 'entertainment' },
+  { name: 'Technology', icon: Laptop, code: 'technology' },
+  { name: 'Health', icon: Heart, code: 'health' },
+  { name: 'Education', icon: GraduationCap, code: 'education' },
+  { name: 'Influencers', icon: Users, code: 'influencers' },
+  { name: 'Startups', icon: Rocket, code: 'startups' },
+  { name: 'Travel', icon: Plane, code: 'travel' },
+  { name: 'Food', icon: Utensils, code: 'food' },
+  { name: 'Fashion', icon: Shirt, code: 'fashion' },
+  { name: 'Lifestyle', icon: Sparkles, code: 'lifestyle' },
+  { name: 'Movies', icon: Clapperboard, code: 'movies' },
 ];
 
 const CategoryBar = () => {
@@ -46,15 +46,15 @@ const CategoryBar = () => {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState(searchParams.get('category') || 'All');
+  const [currentCategory, setCurrentCategory] = useState(undefined);
 
   useEffect(() => {
-    const category = searchParams.get('category') || 'All';
+    const category = searchParams.get('category') || 'all';
     setCurrentCategory(category);
 
     if (!searchParams.get('category')) {
       const params = new URLSearchParams(searchParams);
-      params.set('category', 'All');
+      params.set('category', 'all');
       const newPath = `?${params.toString()}`;
       router.push(newPath, { shallow: true });
     }
@@ -62,7 +62,7 @@ const CategoryBar = () => {
 
   const handleCategoryChange = (category) => {
     const params = new URLSearchParams(searchParams);
-    params.set('category', category);
+    params.set('category', category.toLowerCase());
     const newPath = `?${params.toString()}`;
     router.push(newPath);
   };
@@ -111,11 +111,11 @@ const CategoryBar = () => {
         </div>
         <div ref={scrollContainerRef} className='flex-grow overflow-x-auto scrollbar-hide'>
           <div className='flex gap-2 px-4 pl-0'>
-            {categories.map(({ name, icon: Icon }) => (
+            {categories.map(({ name, code, icon: Icon }) => (
               <Button
-                key={name}
-                variant={currentCategory === name ? 'default' : 'outline'}
-                onClick={() => handleCategoryChange(name)}
+                key={code}
+                variant={currentCategory === code ? 'default' : 'outline'}
+                onClick={() => handleCategoryChange(code)}
                 className='flex items-center gap-2 whitespace-nowrap'
               >
                 <Icon size={18} />

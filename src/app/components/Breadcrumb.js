@@ -1,24 +1,6 @@
 import Link from 'next/link';
-import { ChevronRight, Home, Globe, Briefcase, Film, Tv, Shirt, Users, Laptop, Heart, GraduationCap, Rocket, Plane, Utensils, Sparkles, Coffee, Clapperboard } from 'lucide-react';
-
-const categoryIcons = {
-  All: Globe,
-  Politics: Users,
-  Business: Briefcase,
-  Beauty: Heart,
-  Sports: Coffee,
-  Entertainment: Tv,
-  Technology: Laptop,
-  Health: Heart,
-  Education: GraduationCap,
-  Influencers: Users,
-  Startups: Rocket,
-  Travel: Plane,
-  Food: Utensils,
-  Fashion: Shirt,
-  Lifestyle: Sparkles,
-  Movies: Clapperboard,
-};
+import { categoryIcons } from '@/src/lib/utils';
+import { ChevronRight, Home, Globe } from 'lucide-react';
 
 export default function Breadcrumb({ category }) {
   const Icon = categoryIcons[category] || Globe;
