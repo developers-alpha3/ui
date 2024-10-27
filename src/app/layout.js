@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import Header from '@/src/app/components/Header';
 import { Quattrocento_Sans, Noto_Serif } from 'next/font/google';
 import './globals.css';
@@ -26,6 +27,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en' className={`${aleo.variable} ${quattrocento.variable} `}>
+      <head>
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_AD_CLIENT_ID}`}
+          crossOrigin='anonymous'
+        />
+      </head>
+
       <body className='bg-background font-sans'>
         <Header />
         <main>{children}</main>

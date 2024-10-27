@@ -4,13 +4,13 @@ import { formatDate } from '@/src/lib/utils';
 
 export default function FeaturedArticle({ article }) {
   return (
-    <div className='relative group rounded-2xl overflow-hidden shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl'>
+    <div className='relative group rounded-2xl overflow-hidden shadow-lg animate-in fade-in duration-300 hover:scale-105 hover:shadow-xl'>
       <Image
         alt={article.title}
         src={`/images/${article.imagename}`}
         width={800}
         height={500}
-        className='object-cover w-full h-80 transition-transform duration-300 ease-in-out transform group-hover:scale-110'
+        className='object-cover w-full h-80 animate-in fade-in duration-300 group-hover:scale-110'
       />
 
       <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6'>

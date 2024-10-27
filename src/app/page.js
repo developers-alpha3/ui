@@ -34,7 +34,7 @@ export default async function Home({ searchParams }) {
   const { articles, currentPage, totalPages } = await fetchArticles(category, page, limit);
 
   return (
-    <main className='min-h-screen'>
+    <main className='min-h-screen animate-in fade-in fade-out duration-500'>
       <CategoryBar />
 
       <Suspense fallback={null}>

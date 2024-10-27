@@ -1,9 +1,10 @@
 'use client';
-import { useState, useEffect, useCallback, useRef } from 'react';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Globe } from 'lucide-react';
 import { categoryIcons, formatDate } from '@/src/lib/utils';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const RecommendedArticles = ({ initialArticles, initialPage, totalPages, category }) => {
   const [articles, setArticles] = useState(initialArticles);
@@ -20,7 +21,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
 
     try {
       const nextPage = page + 1;
-      const categoryParam = category && category !== 'All' ? `category=${encodeURIComponent(category)}&` : '';
+      const categoryParam = category !== 'all' ? `category=${encodeURIComponent(category)}&` : '';
       const response = await fetch(`/api/articles?${categoryParam}page=${nextPage}&limit=10`);
       const { articles: newArticles, totalPages: newTotalPages } = await response.json();
 

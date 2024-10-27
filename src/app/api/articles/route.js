@@ -23,6 +23,7 @@ export async function GET(request) {
     }
 
     const data = await response.json();
+
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching articles:', error);

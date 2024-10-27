@@ -1,18 +1,11 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import LoadingLine from './LoadingLine';
-
+import Image from 'next/image';
 const Header = () => {
   return (
-    <header className='bg-primary sticky top-0 z-50 text-primary-foreground p-4'>
-      <div className='container mx-auto flex justify-start items-center px-6'>
-        <Link href='/'>
-          <h1 className='text-2xl font-bold font-serif'>JUST ONE READ</h1>
-        </Link>
-      </div>
+    <header className='flex flex-col justify-center bg-primary sticky top-0 z-10 text-primary-foreground h-16 px-6'>
+      <Link href='/'>
+        <Image src='/assets/logo.svg' alt='FlickerRead Logo' width={280} height={160} className='' />
+      </Link>
     </header>
   );
 };

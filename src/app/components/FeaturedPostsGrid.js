@@ -3,14 +3,14 @@ import Link from 'next/link';
 
 function FeaturedPost({ article }) {
   return (
-    <div className='bg-background rounded-xl overflow-hidden shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl'>
+    <div className='bg-background rounded-xl overflow-hidden shadow-md animate-in fade-in duration-300 hover:scale-105 hover:shadow-xl'>
       <div className='relative h-44 overflow-hidden'>
         <Image
           alt={article.title}
           src={`/images/${article.imagename}`}
           width={100}
           height={100}
-          className='transition-transform duration-300 ease-in-out w-auto h-auto transform hover:scale-110'
+          className='animate-in fade-in duration-300 w-auto h-auto hover:scale-110'
         />
       </div>
 

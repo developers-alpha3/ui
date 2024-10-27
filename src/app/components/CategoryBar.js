@@ -1,4 +1,6 @@
 'use client';
+
+import { cn } from '@/src/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/src/components/ui/button';
 import {
@@ -38,6 +40,10 @@ const categories = [
   { name: 'Fashion', icon: Shirt, code: 'fashion' },
   { name: 'Lifestyle', icon: Sparkles, code: 'lifestyle' },
   { name: 'Movies', icon: Clapperboard, code: 'movies' },
+  { name: 'Crypto', icon: Clapperboard, code: 'crypto' },
+  { name: 'Gaming', icon: Clapperboard, code: 'gaming' },
+  { name: 'Art', icon: Clapperboard, code: 'art' },
+  { name: 'Science', icon: Clapperboard, code: 'science' },
 ];
 
 const CategoryBar = () => {
@@ -46,12 +52,9 @@ const CategoryBar = () => {
   const scrollContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState(undefined);
+  const currentCategory = searchParams.get('category') || 'all';
 
   useEffect(() => {
-    const category = searchParams.get('category') || 'all';
-    setCurrentCategory(category);
-
     if (!searchParams.get('category')) {
       const params = new URLSearchParams(searchParams);
       params.set('category', 'all');
@@ -97,20 +100,19 @@ const CategoryBar = () => {
   }, []);
 
   return (
-    <div className='relative bg-secondary py-4'>
-      <div className='flex items-center'>
-        <div className='w-9 flex-shrink-0'>
-          <Button
-            variant='ghost'
-            size='icon'
-            className={`transition-opacity duration-300 ${showLeftArrow ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-            onClick={() => scroll('left')}
-          >
-            <ChevronLeft className='h-4 w-4' />
-          </Button>
-        </div>
-        <div ref={scrollContainerRef} className='flex-grow overflow-x-auto scrollbar-hide'>
-          <div className='flex gap-2 px-4 pl-0'>
+    <div className='relative bg-secondary py-4 overflow-hidden'>
+      <div className='flex items-center max-w-full'>
+        <Button
+          variant='ghost'
+          size='icon'
+          className={cn('absolute left-0 z-10 transition-all duration-300', showLeftArrow ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full')}
+          onClick={() => scroll('left')}
+        >
+          <ChevronLeft className='h-4 w-4' />
+        </Button>
+
+        <div ref={scrollContainerRef} className='flex-grow overflow-x-auto scrollbar-hide mx-8'>
+          <div className='flex gap-2'>
             {categories.map(({ name, code, icon: Icon }) => (
               <Button
                 key={code}
@@ -124,16 +126,15 @@ const CategoryBar = () => {
             ))}
           </div>
         </div>
-        <div className='w-9 flex-shrink-0'>
-          <Button
-            variant='ghost'
-            size='icon'
-            className={`transition-opacity duration-300 ${showRightArrow ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-            onClick={() => scroll('right')}
-          >
-            <ChevronRight className='h-4 w-4' />
-          </Button>
-        </div>
+
+        <Button
+          variant='ghost'
+          size='icon'
+          className={cn('absolute right-0 z-10 transition-all duration-300', showRightArrow ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full')}
+          onClick={() => scroll('right')}
+        >
+          <ChevronRight className='h-4 w-4' />
+        </Button>
       </div>
     </div>
   );
