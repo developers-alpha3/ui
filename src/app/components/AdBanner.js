@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-const AdBanner = ({ dataAdSlot, dataAdFormat, dataFullWidthResponsive }) => {
+const AdBanner = ({ dataAdSlot, dataAdFormat, dataFullWidthResponsive, style }) => {
   useEffect(() => {
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -15,10 +15,9 @@ const AdBanner = ({ dataAdSlot, dataAdFormat, dataFullWidthResponsive }) => {
     <ins
       className='adsbygoogle'
       data-ad-slot={dataAdSlot}
-      style={{ display: 'block' }}
-      data-ad-format={dataAdFormat}
+      style={{ display: 'block', ...style }}
       data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_AD_CLIENT_ID}
-      data-full-width-responsive={dataFullWidthResponsive.toString()}
+      data-full-width-responsive='true'
     ></ins>
   );
 };

@@ -1,4 +1,4 @@
-module.exports = {
+const cf = {
   siteUrl: 'https://www.yournewspage.com',
   generateRobotsTxt: true,
   exclude: ['/server-sitemap.xml'], // Exclude server-side generated sitemap
@@ -8,3 +8,5 @@ module.exports = {
     ],
   },
 };
+
+export default cf;

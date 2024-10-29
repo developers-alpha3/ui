@@ -1,7 +1,6 @@
 import NextSEO from './next-seo.config.js';
 
 const nextConfig = {
-  // ... (keep existing configurations)
   images: {
     unoptimized: true,
   },

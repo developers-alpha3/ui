@@ -118,7 +118,7 @@ const CategoryBar = () => {
                 key={code}
                 variant={currentCategory === code ? 'default' : 'outline'}
                 onClick={() => handleCategoryChange(code)}
-                className='flex items-center gap-2 whitespace-nowrap'
+                className='flex items-center gap-2 whitespace-nowrap font-serif'
               >
                 <Icon size={18} />
                 {name}

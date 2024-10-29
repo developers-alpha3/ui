@@ -5,8 +5,8 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['var(--font-aleo)', 'serif'],
-        sans: ['var(--font-quattrocento-sans)', 'serif'],
+        serif: ['var(--font-mulish)'],
+        sans: ['var(--font-quattrocento-sans)'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -54,10 +54,6 @@ const config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-      },
-      fontFamily: {
-        serif: ['var(--font-aleo)', 'serif'],
-        sans: ['var(--font-quattrocento-sans)', 'serif'],
       },
       transitionDelay: {
         100: '100ms',
