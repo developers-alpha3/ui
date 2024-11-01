@@ -29,7 +29,7 @@ async function fetchArticles(category, page, limit) {
 export default async function Home({ searchParams }) {
   const page = 1;
   const limit = 20;
-  const category = searchParams.category;
+  const category = searchParams.category || 'all';
 
   const { articles, currentPage, totalPages } = await fetchArticles(category, page, limit);
 

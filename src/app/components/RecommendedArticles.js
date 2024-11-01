@@ -21,8 +21,7 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
 
     try {
       const nextPage = page + 1;
-      const categoryParam = category !== 'all' ? `category=${encodeURIComponent(category)}&` : '';
-      const response = await fetch(`/api/articles?${categoryParam}page=${nextPage}&limit=10`);
+      const response = await fetch(`/api/articles?category=${encodeURIComponent(category)}&page=${nextPage}&limit=10`);
       const { articles: newArticles, totalPages: newTotalPages } = await response.json();
 
       if (newArticles && newArticles.length > 0) {
