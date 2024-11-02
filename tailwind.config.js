@@ -6,7 +6,8 @@ const config = {
     extend: {
       fontFamily: {
         serif: ['var(--font-mulish)'],
-        sans: ['var(--font-quattrocento-sans)'],
+        sans: ['var(--font-nunito-sans)'],
+        petit: ['var(--font-petit-formal-script)'],
       },
       colors: {
         background: 'hsl(var(--background))',

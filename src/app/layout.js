@@ -1,6 +1,6 @@
 import GoogleAdsense from '@/src/app/components/GoogleAdsense';
 import Header from '@/src/app/components/Header';
-import { Quattrocento_Sans, Mulish, Nunito_Sans } from 'next/font/google';
+import { Petit_Formal_Script, Mulish, Nunito_Sans } from 'next/font/google';
 import './globals.css';
 
 const mulish = Mulish({
@@ -11,10 +11,18 @@ const mulish = Mulish({
   preload: true,
 });
 
-const quattrocento = Nunito_Sans({
+const peti = Petit_Formal_Script({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-petit-formal-script',
+  style: ['normal'],
+  preload: true,
+});
+
+const nunito = Nunito_Sans({
   subsets: ['latin'],
   weight: ['400', '700'],
-  variable: '--font-quattrocento-sans',
+  variable: '--font-nunito-sans',
   style: ['normal'],
   preload: true,
 });
@@ -26,7 +34,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en' className={`${mulish.variable} ${quattrocento.variable} `}>
+    <html lang='en' className={`${mulish.variable} ${peti.variable} ${nunito.variable} `}>
       <body className='bg-background font-sans text-foreground/90'>
         <Header />
         <main>{children}</main>
