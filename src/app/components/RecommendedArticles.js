@@ -77,20 +77,18 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
         {articles.map((article) => {
           const CategoryIcon = categoryIcons[article.category.toLowerCase()] || Globe;
           return (
-            <div
-              key={article.id}
-              className='bg-background rounded-xl overflow-hidden shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl'
-            >
-              <div className='relative h-44 overflow-hidden'>
-                <Image
-                  width={100}
-                  height={100}
-                  alt={article.title}
-                  src={`/images/${article.imagename}`}
-                  className='transition-transform duration-300 ease-in-out w-auto h-auto transform hover:scale-110'
-                />
-              </div>
-              <Link href={`/articles/${article.slug}?id=${article.id}`}>
+            <Link href={`/articles/${article.slug}?id=${article.id}`} key={article.id}>
+              <div className='bg-background rounded-xl overflow-hidden shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl'>
+                <div className='relative h-44 overflow-hidden'>
+                  <Image
+                    width={100}
+                    height={100}
+                    alt={article.title}
+                    src={`/images/${article.imagename}`}
+                    className='transition-transform duration-300 ease-in-out w-auto h-auto transform hover:scale-110'
+                  />
+                </div>
+
                 <div className='p-4'>
                   <h4 className='scroll-m-20 pb-2 text-lg font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary'>
                     {article.title}
@@ -105,8 +103,8 @@ const RecommendedArticles = ({ initialArticles, initialPage, totalPages, categor
                     </div>
                   </div>
                 </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
           );
         })}
       </div>

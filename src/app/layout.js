@@ -1,6 +1,7 @@
 import GoogleAdsense from '@/src/app/components/GoogleAdsense';
 import Header from '@/src/app/components/Header';
 import { Petit_Formal_Script, Mulish, Nunito_Sans } from 'next/font/google';
+
 import './globals.css';
 
 const mulish = Mulish({
@@ -28,8 +29,8 @@ const nunito = Nunito_Sans({
 });
 
 export const metadata = {
-  title: 'Your App Title',
-  description: 'Your app description',
+  title: 'Lucaread',
+  description: 'Your daily does of articles',
 };
 
 export default function RootLayout({ children }) {
