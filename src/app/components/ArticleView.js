@@ -26,13 +26,13 @@ export default function ArticleView({ article }) {
         </div>
 
         <article className='mt-8'>
-          <div className='relative w-full sm:w-[115%] sm:left-1/2 sm:-translate-x-1/2 aspect-[21/7] mb-16 overflow-hidden rounded-3xl shadow-[rgba(0,_0,_0,_0.2)_0px_40px_40px_-7px]'>
+          <div className='relative w-full sm:w-[115%] sm:left-1/2 sm:-translate-x-1/2 aspect-[21/9] md:aspect-[21/7] mb-16 overflow-hidden rounded-3xl shadow-[rgba(0,_0,_0,_0.2)_0px_40px_40px_-7px]'>
             <Image src={`/images/${article.imagename}`} alt={article.title || 'Article image'} fill className='object-cover' unoptimized />
           </div>
 
           <div className='bg-background px-4 sm:px-0'>
             <div className='mb-12'>
-              <h1 className='text-3xl font-bold text-secondary-foreground mb-2 font-serif tracking-wide'>{article.title}</h1>
+              <h1 className='text-2xl md:text-3xl font-bold text-secondary-foreground mb-2 font-serif tracking-wide'>{article.title}</h1>
               <div className='flex justify-between items-center'>
                 <p className='text-sm text-muted-foreground'>{formatDate(article.isodate)}</p>
                 <div className='flex items-center'>
