@@ -1,6 +1,25 @@
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Globe, Briefcase, Tv, Shirt, Users, Laptop, Heart, GraduationCap, Rocket, Plane, Utensils, Sparkles, Coffee, Clapperboard } from 'lucide-react';
+import {
+  Globe,
+  Briefcase,
+  Tv,
+  Shirt,
+  Users,
+  Laptop,
+  Heart,
+  GraduationCap,
+  Rocket,
+  Plane,
+  Utensils,
+  Sparkles,
+  Coffee,
+  Clapperboard,
+  Bitcoin,
+  Gamepad2,
+  Palette,
+  FlaskConical,
+} from 'lucide-react';
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -37,4 +56,8 @@ export const categoryIcons = {
   fashion: Shirt,
   lifestyle: Sparkles,
   movies: Clapperboard,
+  crypto: Bitcoin,
+  gaming: Gamepad2,
+  art: Palette,
+  science: FlaskConical,
 };

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Globe } from 'lucide-react';
 import { formatDate, categoryIcons } from '@/src/lib/utils';
 
 function FeaturedPost({ article }) {

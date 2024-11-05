@@ -20,6 +20,10 @@ import {
   Clapperboard,
   ChevronLeft,
   ChevronRight,
+  Bitcoin,
+  Gamepad2,
+  Palette,
+  FlaskConical,
 } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
 
@@ -40,10 +44,10 @@ const categories = [
   { name: 'Fashion', icon: Shirt, code: 'fashion' },
   { name: 'Lifestyle', icon: Sparkles, code: 'lifestyle' },
   { name: 'Movies', icon: Clapperboard, code: 'movies' },
-  { name: 'Crypto', icon: Clapperboard, code: 'crypto' },
-  { name: 'Gaming', icon: Clapperboard, code: 'gaming' },
-  { name: 'Art', icon: Clapperboard, code: 'art' },
-  { name: 'Science', icon: Clapperboard, code: 'science' },
+  { name: 'Crypto', icon: Bitcoin, code: 'crypto' },
+  { name: 'Gaming', icon: Gamepad2, code: 'gaming' },
+  { name: 'Art', icon: Palette, code: 'art' },
+  { name: 'Science', icon: FlaskConical, code: 'science' },
 ];
 
 const CategoryBar = () => {
