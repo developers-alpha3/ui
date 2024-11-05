@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import AdBanner from './AdBanner';
 import Image from 'next/image';
 import remarkGfm from 'remark-gfm';
 import { Globe } from 'lucide-react';
@@ -12,13 +11,13 @@ export default function ArticleView({ article }) {
 
   return (
     <>
-      <div className='absolute top-2/3 left-10 h-auto w-auto hidden lg:block'>
+      {/* <div className='absolute top-2/3 left-10 h-auto w-auto hidden lg:block'>
         <AdBanner dataAdSlot='1046402712' dataAdFormat='auto' dataFullWidthResponsive={true} />
       </div>
 
       <div className='absolute top-2/3 right-10 h-auto w-auto hidden lg:block'>
         <AdBanner dataAdSlot='1097102084' dataAdFormat='auto' dataFullWidthResponsive={true} />
-      </div>
+      </div> */}
 
       <div className='py-4 animate-in fade-in fade-out duration-500 translate-y-4'>
         <div className='w-full sm:w-[115%] relative sm:left-1/2 sm:-translate-x-1/2 mb-4 font-serif'>
@@ -60,15 +59,16 @@ export default function ArticleView({ article }) {
                       key={article.id}
                       className='bg-background rounded-xl overflow-hidden shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl'
                     >
-                      <div className='relative h-44 overflow-hidden'>
-                        <Image
-                          fill
-                          alt={article.title}
-                          src={`/images/${article.imagename}`}
-                          className='transition-transform duration-300 ease-in-out transform hover:scale-110'
-                        />
-                      </div>
                       <Link href={`/articles/${article.slug}?id=${article.id}`}>
+                        <div className='relative h-44 overflow-hidden'>
+                          <Image
+                            fill
+                            alt={article.title}
+                            src={`/images/${article.imagename}`}
+                            className='transition-transform duration-300 ease-in-out transform hover:scale-110'
+                          />
+                        </div>
+
                         <div className='p-4'>
                           <h4 className='scroll-m-20 text-lg mb-2 font-semibold tracking-tight transition-colors duration-300 ease-in-out hover:text-primary font-serif'>
                             {article.title}
